@@ -47,16 +47,15 @@ def sendSms(users):
         else:
             remark = title
 
-        if len(users) > 0 :
-            print "摘要:" + remark
+        print "摘要:" + remark
 
         for user in users:
             phone = users[user]
             print "发送短信给 " + user + " : " + phone
             # 发送短信
 
-            # smsResponse = dysms_python.demo_sms_send.sendSms(user, phone, remark)
-            # SQLSms.insert_sms_response(smsResponse)
+            smsResponse = dysms_python.demo_sms_send.sendSms(user, phone, remark)
+            SQLSms.insert_sms_response(smsResponse)
 
 def crawlerNotice():
     try:
@@ -107,7 +106,6 @@ if len(sys.argv) > 1:
         phone = sys.argv[3]
         # 插入用户成功才发送短信
         if SQLSms.insert_user(unicode(user), unicode(phone)) > 0:
-            print "111"
             sendSms({user:phone})
     elif arg1 == '-l':
         users = SQLSms.read_users()
