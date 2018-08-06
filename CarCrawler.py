@@ -81,8 +81,8 @@ def crawlerNotice():
         SQLHzCarNotice.insert_notice(titles, days)
 
         users = SQLSms.read_users()
-
-        sendSms(users)
+        if len(titles) > 0:
+            sendSms(users)
 
     except urllib2.URLError, e:
         if hasattr(e, "code"):

@@ -68,7 +68,6 @@ def sendSms(user, phone, remark):
     __business_id = uuid.uuid1()
     # print(__business_id)
     params = "{\"name\":\""+user+"\",\"remark\":\""+remark+"\"}"
-    print params, len(params), len(remark)
     # params = u'{"name":"wqb","code":"12345678","address":"bz","phone":"13000000000"}'
     smsResponse = send_sms(__business_id, phone, "朱凇", "SMS_141605383", params)
     # smsResponse = ""
