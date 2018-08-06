@@ -70,13 +70,16 @@ def insert_user(user, phone):
 
         cursor.execute(sql, param)
         count = cursor.rowcount
-        if count > 0:
-            print "添加用户 " + user+" : " + phone
+
         # 关闭数据库
         cursor.close()
         conn.commit()
         conn.close()
 
+        if count > 0:
+            print "添加用户 " + user+" : " + phone
+
+        return count
     except Exception, e:
         print "insert_user error:", e
 
