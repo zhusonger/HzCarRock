@@ -1,0 +1,4 @@
+#!/Users/zhusong/Documents/Dev/python/HzCarRock/venv/bin/python
+# EASY-INSTALL-SCRIPT: 'mns==1.1.4','mnscmd'
+__requires__ = 'mns==1.1.4'
+__import__('pkg_resources').run_script('mns==1.1.4', 'mnscmd')

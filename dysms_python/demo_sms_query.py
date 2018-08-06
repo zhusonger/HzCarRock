@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
 from aliyunsdkdysmsapi.request.v20170525 import SendSmsRequest
@@ -59,4 +60,4 @@ def query_send_detail(biz_id, phone_number, page_size, current_page, send_date):
 
 
 if __name__ == '__main__':
-    print(query_send_detail("141324518542671592^0", "13000000000", 10, 1, "20180214"))
+    print(query_send_detail("365008733538651891^0", "15068822229", 10, 1, "20180806"))
