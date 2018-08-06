@@ -52,9 +52,8 @@ def sendSms(users):
             print "发送短信给 " + user + " : " + phone
             # 发送短信
 
-            # smsResponse = dysms_python.demo_sms_send.sendSms(user, phone, remark)
-            # print smsResponse
-            # SQLSms.insert_sms_response(smsResponse)
+            smsResponse = dysms_python.demo_sms_send.sendSms(user, phone, remark)
+            SQLSms.insert_sms_response(smsResponse)
 
 def crawlerNotice():
     try:
@@ -85,7 +84,6 @@ def crawlerNotice():
 
         sendSms(users)
 
-        # SQLHzCarNotice.delete_notice();
     except urllib2.URLError, e:
         if hasattr(e, "code"):
             print "code" + e.code
@@ -114,6 +112,7 @@ if len(sys.argv) > 1:
     elif arg1 == '-c':
         print "开始爬了..."
         crawlerNotice()
+        print "爬完了..."
     else:
         print '脚本参数:\n' \
               + 'CarCrawler.py.py -c 启动爬虫脚本\n' \
