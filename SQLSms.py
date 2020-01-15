@@ -3,9 +3,6 @@
 # 导入SQLite驱动:
 import sqlite3
 import json
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
 
 # 创建数据库
@@ -44,7 +41,7 @@ def insert_sms_response(smsResponse):
         else:
             bizId = unicode('-1')
 
-        print "BizId : " + bizId
+        print ("BizId : " + bizId)
 
         sql = 'insert into sms_logs(bizId, smsResponse) values(?, ?)'
         cursor.execute(sql, [bizId, unicode(smsResponse)])
@@ -52,8 +49,8 @@ def insert_sms_response(smsResponse):
         cursor.close()
         conn.commit()
         conn.close()
-    except Exception, e:
-        print "insert_sms_response error", e
+    except Exception as e:
+        print ("insert_sms_response error" + e)
 
 
 def insert_user(user, phone):
@@ -77,11 +74,11 @@ def insert_user(user, phone):
         conn.close()
 
         if count > 0:
-            print "添加用户 " + user+" : " + phone
+            print ("添加用户 " + user+" : " + phone)
 
         return count
-    except Exception, e:
-        print "insert_user error:", e
+    except Exception as e:
+        print ("insert_user error:" + e)
 
 
 def read_users():
@@ -108,7 +105,7 @@ def read_users():
         conn.commit()
         conn.close()
     except Exception:
-        print 'read_users error'
+        print ('read_users error')
 
     return users
 
@@ -131,6 +128,6 @@ def delete_user(key):
         cursor.close()
         conn.commit()
         conn.close()
-    except Exception, e:
-        print 'delete_user error : ', e
+    except Exception as e:
+        print ('delete_user error : ' + e)
 

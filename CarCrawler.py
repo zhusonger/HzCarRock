@@ -13,7 +13,9 @@ import SQLHzCarNotice
 # 发送短信用户数据库
 import SQLSms
 
-import dysms_python.demo_sms_send
+import sys
+#导入短信SDK
+from dysms_python import *
 
 
 keyword = u"阶梯"
@@ -38,7 +40,7 @@ def sendSms(users):
             start = keyIndex - 2
             end = keyIndex + keyLen + 2
             remark = title[0:2] + u".." + title[start:end] + u".." + title[titleLen - 2:titleLen] \
-                     + " " + unicode(t.tm_mon) + "月" + unicode(t.tm_mday) + "号"
+                     + " " + str(t.tm_mon) + "月" + str(t.tm_mday) + "号"
         else:
             remark = title
 
@@ -49,13 +51,13 @@ def sendSms(users):
             print ("发送短信给 " + user + " : " + phone)
             # 发送短信
 
-            smsResponse = dysms_python.demo_sms_send.sendSms(user, phone, remark)
+            smsResponse = demo_sms_send.sendSms(user, phone, remark)
             SQLSms.insert_sms_response(smsResponse)
 
 def crawlerNotice():
     try:
-        request = urllib.reques.Request(url, headers=headers)
-        response = urllib.reques.urlopen(request)
+        request = urllib.request.Request(url, headers=headers)
+        response = urllib.request.urlopen(request)
         content = response.read()
         content = content.decode('utf-8')
         pattern = re.compile('<a class="text" href=\".*?\" target="_blank">(.*?)</a>\s*<span class="date">(.*?)</span>',
@@ -81,7 +83,7 @@ def crawlerNotice():
         if len(titles) > 0:
             sendSms(users)
 
-    except urllib2.URLError as e:
+    except urllib.request.URLError as e:
         if hasattr(e, "code"):
             print ("code" + e.code)
         if hasattr(e, "reason"):
@@ -94,13 +96,13 @@ if len(sys.argv) > 1:
     # 删除用户
     if arg1 == '-d':
         key = sys.argv[2]
-        SQLSms.delete_user(unicode(key))
+        SQLSms.delete_user(str(key))
     # 添加用户
     elif arg1 == '-a':
         user = sys.argv[2]
         phone = sys.argv[3]
         # 插入用户成功才发送短信
-        if SQLSms.insert_user(unicode(user), unicode(phone)) > 0:
+        if SQLSms.insert_user(str(user), str(phone)) > 0:
             sendSms({user:phone})
     elif arg1 == '-l':
         users = SQLSms.read_users()
