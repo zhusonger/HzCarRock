@@ -49,7 +49,7 @@ def insert_notice(titles, days):
         conn.commit()
         conn.close()
     except Exception:
-        print "insertNotice error"
+        print ("insertNotice error")
 
 
 def read_notice():
@@ -78,7 +78,7 @@ def read_notice():
         conn.commit()
         conn.close()
     except Exception:
-        print 'readNotice error'
+        print ('readNotice error')
 
     return titles, days
 
@@ -103,6 +103,6 @@ def delete_notice():
         conn.commit()
         conn.close()
     except Exception:
-        print 'deleteNotice error'
+        print ('deleteNotice error')
 
 

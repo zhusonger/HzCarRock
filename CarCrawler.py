@@ -1,18 +1,13 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 # 网络请求
-import urllib2
+import urllib.request
 # 正则表达式
 import re
 # 时间
 import time
 # JSON
 import json
-# 修改默认编码
-import sys
-
-reload(sys)
-sys.setdefaultencoding('utf-8')
 # 日志数据库
 import SQLHzCarNotice
 # 发送短信用户数据库
@@ -47,11 +42,11 @@ def sendSms(users):
         else:
             remark = title
 
-        print "摘要:" + remark
+        print ("摘要:" + remark)
 
         for user in users:
             phone = users[user]
-            print "发送短信给 " + user + " : " + phone
+            print ("发送短信给 " + user + " : " + phone)
             # 发送短信
 
             smsResponse = dysms_python.demo_sms_send.sendSms(user, phone, remark)
@@ -59,8 +54,8 @@ def sendSms(users):
 
 def crawlerNotice():
     try:
-        request = urllib2.Request(url, headers=headers)
-        response = urllib2.urlopen(request)
+        request = urllib.reques.Request(url, headers=headers)
+        response = urllib.reques.urlopen(request)
         content = response.read()
         content = content.decode('utf-8')
         pattern = re.compile('<a class="text" href=\".*?\" target="_blank">(.*?)</a>\s*<span class="date">(.*?)</span>',
@@ -86,11 +81,11 @@ def crawlerNotice():
         if len(titles) > 0:
             sendSms(users)
 
-    except urllib2.URLError, e:
+    except urllib2.URLError as e:
         if hasattr(e, "code"):
-            print "code" + e.code
+            print ("code" + e.code)
         if hasattr(e, "reason"):
-            print "reason" + e.reason
+            print ("reason" + e.reason)
 
 
 # 姓名跟电话号码
@@ -109,22 +104,22 @@ if len(sys.argv) > 1:
             sendSms({user:phone})
     elif arg1 == '-l':
         users = SQLSms.read_users()
-        print "用户列表:"
+        print ("用户列表:")
         for user in users:
-            print user+" " + users[user]
+            print (user+" " + users[user])
     elif arg1 == '-c':
-        print "开始爬了..."
+        print ("开始爬了...")
         crawlerNotice()
-        print "爬完了..."
+        print ("爬完了...")
     else:
-        print '脚本参数:\n' \
+        print ('脚本参数:\n' \
               + 'CarCrawler.py.py -c 启动爬虫脚本\n' \
               + 'CarCrawler.py.py -d name/phone 删除用户\n' \
               + 'CarCrawler.py.py -a name phone 新增用户\n' \
-              + 'CarCrawler.py.py -l 显示所有用户\n';
+              + 'CarCrawler.py.py -l 显示所有用户\n');
 else:
-    print '脚本参数:\n' \
+    print ('脚本参数:\n' \
           + 'CarCrawler.py.py -c 启动爬虫脚本\n' \
           + 'CarCrawler.py.py -d name/phone 删除用户\n' \
           + 'CarCrawler.py.py -a name phone 新增用户\n' \
-          + 'CarCrawler.py.py -l 显示所有用户\n';
+          + 'CarCrawler.py.py -l 显示所有用户\n');
