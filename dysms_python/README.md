@@ -7,23 +7,41 @@
 * 该python SDK包含MNS、SMS功能，同时兼容python2.6+、python3.0+
 
 ## 文档概述
+
 ├── aliyunsdkdybaseapi   #原aliyunsdkdybaseapi库
+
 │   └── request
+
 ├── aliyunsdkdysmsapi    #原aliyunsdkdysmsapi库
+
 │   ├── __init__.py
+
 │   └── request
+
 ├── const.py             #配置key、secret等参数
+
 ├── demo_sms_api.py      #通过mns获取队列回执
+
 ├── demo_sms_query.py    #短信发送状态查询
+
 ├── demo_sms_send.py     #短信发送
+
 ├── mns_python_sdk       #原mns_python_sdk
+
 │   ├── bin
+
 │   ├── mns
+
 │   ├── sample 
+
 │   ├── sample.cfg
+
 │   ├── sample.py
+
 │   └── setup.py
+
 └── setup.py
+
 
 ## SDK使用
 
