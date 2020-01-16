@@ -23,3 +23,6 @@ From='xxxx@xxxx.com.cn'
 
 # 使用方式
 运行 CarCrawler.py 即可
+
+目前我是结合Jenkins做定时构建
+也可以使用linux的定时任务crontab
