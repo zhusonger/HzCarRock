@@ -9,7 +9,8 @@
 #前置条件
 1. python3环境
 2. 同级目录添加config.ini文件
-```[User]
+```
+[User]
 Name=XXX
 UserName=xxx@xxx.com.cn
 Password=xxxx
