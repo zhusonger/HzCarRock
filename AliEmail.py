@@ -48,11 +48,12 @@ def send_email(subject, text, receiver):
     msg.attach(texthtml)
     # 发送邮件
     try:
-        client = smtplib.SMTP()
+        # client = smtplib.SMTP()
         # python 2.7以上版本，若需要使用SSL，可以这样创建client
-        # client = smtplib.SMTP_SSL()
+        client = smtplib.SMTP_SSL('smtp.qiye.aliyun.com', 465)
+        client.ehlo()
         # SMTP普通端口为25或80
-        client.connect('smtp.mxhichina.com', 25)
+        # client.connect()
         # 开启DEBUG模式 0关闭
         client.set_debuglevel(0)
         client.login(username, password)
@@ -62,7 +63,7 @@ def send_email(subject, text, receiver):
         client.sendmail(username, receiver, msg.as_string())
         # 支持多个收件人
         # client.sendmail(username, receivers, msg.as_string())
-        client.quit()
+        client.close()
         print('邮件发送成功！')
     except smtplib.SMTPConnectError as e:
         print('邮件发送失败，连接失败:', e.smtp_code, e.smtp_error)
