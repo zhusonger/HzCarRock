@@ -9,6 +9,9 @@
 #前置条件
 1. python3环境
 2. 同级目录添加config.ini文件
+3. 阿里云邮箱（这个可以自己换, 修改下hostname即可）
+
+## config.ini格式
 ```
 [User]
 Name=XXX
