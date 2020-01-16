@@ -15,10 +15,11 @@ def create_tab():
 
     # 执行一条SQL语句，创建notice表:
     cursor.execute(
-        'create table if not exists users (id integer primary key AUTOINCREMENT, name varchar(255), phone varchar(100) UNIQUE) ')
+        'create table if not exists users (id integer primary key AUTOINCREMENT, name varchar(255), email varchar(255) UNIQUE) ')
 
-    cursor.execute(
-        'create table if not exists sms_logs (id integer primary key AUTOINCREMENT, bizId varchar(255), smsResponse varchar(255))')
+    # cursor.execute(
+    #     'create table if not exists sms_logs (id integer primary key AUTOINCREMENT, bizId varchar(255), smsResponse '
+    #     'varchar(255))')
 
     # 关闭数据库
     cursor.close()
@@ -26,31 +27,31 @@ def create_tab():
     conn.close()
 
 
-def insert_sms_response(smsResponse):
-    create_tab()
-
-    try:
-        text = json.loads(smsResponse)
-        conn = sqlite3.connect("notice.db")
-        # 创建一个Cursor
-        cursor = conn.cursor()
-
-        code = text["Code"]
-        if code == 'OK':
-            bizId = unicode(text["BizId"])
-        else:
-            bizId = unicode('-1')
-
-        print ("BizId : " + bizId)
-
-        sql = 'insert into sms_logs(bizId, smsResponse) values(?, ?)'
-        cursor.execute(sql, [bizId, unicode(smsResponse)])
-        # 关闭数据库
-        cursor.close()
-        conn.commit()
-        conn.close()
-    except Exception as e:
-        print ("insert_sms_response error" + e)
+# def insert_sms_response(sms_response):
+#     create_tab()
+#
+#     try:
+#         text = json.loads(sms_response)
+#         conn = sqlite3.connect("notice.db")
+#         # 创建一个Cursor
+#         cursor = conn.cursor()
+#
+#         code = text["Code"]
+#         if code == 'OK':
+#             bizId = str(text["BizId"])
+#         else:
+#             bizId = str('-1')
+#
+#         print ("BizId : " + bizId)
+#
+#         sql = 'insert into sms_logs(bizId, smsResponse) values(?, ?)'
+#         cursor.execute(sql, [bizId, str(sms_response)])
+#         # 关闭数据库
+#         cursor.close()
+#         conn.commit()
+#         conn.close()
+#     except Exception as e:
+#         print("insert_sms_response error" + e)
 
 
 def insert_user(user, phone):
@@ -62,7 +63,7 @@ def insert_user(user, phone):
         conn = sqlite3.connect("notice.db")
         # 创建一个Cursor
         cursor = conn.cursor()
-        sql = 'insert into users(name, phone) values(?, ?)'
+        sql = 'insert into users(name, email) values(?, ?)'
         param = [user, phone]
 
         cursor.execute(sql, param)
@@ -74,11 +75,11 @@ def insert_user(user, phone):
         conn.close()
 
         if count > 0:
-            print ("添加用户 " + user+" : " + phone)
+            print("添加用户 " + user+" : " + phone)
 
         return count
     except Exception as e:
-        print ("insert_user error:" + e)
+        print("insert_user error:" + e)
 
 
 def read_users():
@@ -92,7 +93,7 @@ def read_users():
         # 创建一个Cursor
         cursor = conn.cursor()
 
-        sql = 'select name, phone from users'
+        sql = 'select name, email from users'
         # 执行一条SQL语句，查询日志
         cursor.execute(sql)
         values = cursor.fetchall()
@@ -105,7 +106,7 @@ def read_users():
         conn.commit()
         conn.close()
     except Exception:
-        print ('read_users error')
+        print('read_users error')
 
     return users
 
@@ -120,7 +121,7 @@ def delete_user(key):
         # 创建一个Cursor
         cursor = conn.cursor()
 
-        sql = 'delete from users where name = ? or phone = ?'
+        sql = 'delete from users where name = ? or email = ?'
         # 执行一条SQL语句，查询日志
         cursor.execute(sql, [key, key])
 
@@ -129,5 +130,5 @@ def delete_user(key):
         conn.commit()
         conn.close()
     except Exception as e:
-        print ('delete_user error : ' + e)
+        print('delete_user error : ' + e)
 

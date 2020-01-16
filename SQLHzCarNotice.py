@@ -14,7 +14,11 @@ def create_tab():
 
     # 执行一条SQL语句，创建notice表:
     cursor.execute(
-        'create table if not exists notice (id integer primary key AUTOINCREMENT, title varchar(255), noticeDay varchar(20)) ')
+        'create table if not exists notice ('
+        'id integer primary key AUTOINCREMENT,'
+        ' title varchar(255),'
+        ' href varchar(255),'
+        ' noticeDay varchar(20)) ')
 
     # 关闭数据库
     cursor.close()
@@ -22,7 +26,7 @@ def create_tab():
     conn.close()
 
 
-def insert_notice(titles, days):
+def insert_notice(titles, hrefs, days):
     if len(titles) != len(days) or len(titles) == 0:
         # print "title & day len is not equal or is empyt"
         return
@@ -35,12 +39,13 @@ def insert_notice(titles, days):
         conn = sqlite3.connect("notice.db")
         # 创建一个Cursor
         cursor = conn.cursor()
-        sql = 'insert into notice(title, noticeDay) values(?, ?)'
+        sql = 'insert into notice(title, href, noticeDay) values(?, ?, ?)'
         param = []
         for index in range(len(titles)):
             title = titles[index]
+            href = hrefs[index];
             day = days[index]
-            param.append([title, day])
+            param.append([title, href, day])
         # 执行一条SQL语句，插入日志:
         cursor.executemany(sql, param)
 
@@ -49,12 +54,13 @@ def insert_notice(titles, days):
         conn.commit()
         conn.close()
     except Exception:
-        print ("insertNotice error")
+        print("insertNotice error")
 
 
 def read_notice():
     create_tab()
     titles = []
+    hrefs = []
     days = []
 
     try:
@@ -64,23 +70,24 @@ def read_notice():
         # 创建一个Cursor
         cursor = conn.cursor()
 
-        sql = 'select title, noticeDay from notice'
+        sql = 'select title, href, noticeDay from notice'
         # 执行一条SQL语句，查询日志
         cursor.execute(sql)
         values = cursor.fetchall()
 
         for item in values:
             titles.append(item[0])
-            days.append(item[1])
+            hrefs.append(item[1])
+            days.append(item[2])
 
         # 关闭数据库
         cursor.close()
         conn.commit()
         conn.close()
     except Exception:
-        print ('readNotice error')
+        print('readNotice error')
 
-    return titles, days
+    return titles, hrefs, days
 
 
 def delete_notice():
@@ -103,6 +110,6 @@ def delete_notice():
         conn.commit()
         conn.close()
     except Exception:
-        print ('deleteNotice error')
+        print('deleteNotice error')
 
 
