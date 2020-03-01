@@ -84,7 +84,18 @@ def crawler_notice():
         SQLHzCarNotice.insert_notice(titles, hrefs, days)
 
         if len(titles) > 0:
-            send_sms(SQLSms.read_users())
+            # send_sms()
+            email_users = SQLSms.read_users()
+            href = items[0][0]
+            title = items[0][1]
+            day = items[0][2]
+
+            text = "<h3>标题</h3>" + title + "\n\n <h3>链接</h3>" + href + "\n\n <h3>日期</h3>" + day
+            for item in email_users:
+                user_email = email_users[item]
+                print("发送短信给 " + item + " : " + user_email)
+                # 发送邮件
+                AliEmail.send_email("阶梯摇号公告更新", text, user_email)
 
     except urllib.request.URLError as e:
         if hasattr(e, "code"):

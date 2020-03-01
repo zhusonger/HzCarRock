@@ -43,7 +43,7 @@ def insert_notice(titles, hrefs, days):
         param = []
         for index in range(len(titles)):
             title = titles[index]
-            href = hrefs[index];
+            href = hrefs[index]
             day = days[index]
             param.append([title, href, day])
         # 执行一条SQL语句，插入日志:
