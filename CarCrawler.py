@@ -86,9 +86,9 @@ def crawler_notice():
         if len(titles) > 0:
             # send_sms()
             email_users = SQLSms.read_users()
-            href = items[0][0]
-            title = items[0][1]
-            day = items[0][2]
+            href = hrefs[0]
+            title = titles[0]
+            day = days[0]
 
             text = "<h3>标题</h3>" + title + "\n\n <h3>链接</h3>" + href + "\n\n <h3>日期</h3>" + day
             for item in email_users:
