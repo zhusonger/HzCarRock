@@ -50,7 +50,7 @@ def send_email(subject, text, receiver):
     try:
         # client = smtplib.SMTP()
         # python 2.7以上版本，若需要使用SSL，可以这样创建client
-        client = smtplib.SMTP_SSL('smtp.qiye.aliyun.com', 465)
+        client = smtplib.SMTP_SSL('smtp.exmail.qq.com', 465)
         client.ehlo()
         # SMTP普通端口为25或80
         # client.connect()
